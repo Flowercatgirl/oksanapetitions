@@ -40,4 +40,9 @@ public class PetitionController {
         petitions.add(petition);
         return "redirect:/petitions/all";
     }
+    @GetMapping("/petitions/all")
+    public String viewAllPetitions(Model model) {
+        model.addAttribute("petitions", petitions);
+        return "all-petitions";
+    }
 }

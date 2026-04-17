@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Petitions</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .petition { border: 1px solid #ccc; margin: 15px 0; padding: 15px; border-radius: 5px; }
+        .petition h3 { margin: 0 0 10px 0; }
+        .petition p { margin: 5px 0; }
+        .signature-count { color: #666; font-size: 0.9em; }
+        .nav { margin-bottom: 20px; }
+        .nav a { margin-right: 15px; }
+        a { text-decoration: none; color: #4CAF50; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/petitions/create">Create Petition</a>
+        <a href="/petitions/all">View All Petitions</a>
+        <a href="/petitions/search">Search</a>
+    </div>
+    
+    <h1>All Petitions</h1>
+    
+    <div th:each="petition : ${petitions}" class="petition">
+        <h3>
+            <a th:href="@{/petitions/view/{id}(id=${petition.id})}" 
+               th:text="${petition.title}">Title</a>
+        </h3>
+        <p th:text="${petition.description}">Description</p>
+        <p class="signature-count">📝 Signature count: <span th:text="${petition.signatureCount}">0</span></p>
+    </div>
+    
+    <p th:if="${petitions.empty}">No petitions yet. <a href="/petitions/create">Create one!</a></p>
+</body>
+</html>
