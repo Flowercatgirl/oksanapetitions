@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +45,23 @@ public class PetitionController {
     public String viewAllPetitions(Model model) {
         model.addAttribute("petitions", petitions);
         return "all-petitions";
+    }
+    @GetMapping("/petitions/search")
+    public String showSearchForm() {
+        return "search";
+    }
+    
+    @GetMapping("/petitions/search/results")
+    public String searchResults(@RequestParam String keyword, Model model) {
+        List<Petition> results = new ArrayList<>();
+        for (Petition p : petitions) {
+            if (p.getTitle().toLowerCase().contains(keyword.toLowerCase()) ||
+                p.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                results.add(p);
+            }
+        }
+        model.addAttribute("results", results);
+        model.addAttribute("keyword", keyword);
+        return "search-results";
     }
 }

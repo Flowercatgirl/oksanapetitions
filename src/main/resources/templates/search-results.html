@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Results</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .petition { border: 1px solid #ccc; margin: 15px 0; padding: 15px; border-radius: 5px; }
+        .petition h3 { margin: 0 0 10px 0; }
+        .nav { margin-bottom: 20px; }
+        .nav a { margin-right: 15px; }
+        a { text-decoration: none; color: #4CAF50; }
+        .no-results { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/petitions/create">Create Petition</a>
+        <a href="/petitions/all">View All Petitions</a>
+        <a href="/petitions/search">Search</a>
+    </div>
+    
+    <h1>Search Results for: "<span th:text="${keyword}">keyword</span>"</h1>
+    
+    <div th:if="${results.empty}" class="no-results">
+        <p>No petitions found matching your search.</p>
+        <p><a href="/petitions/search">Try another search</a></p>
+    </div>
+    
+    <div th:each="petition : ${results}" class="petition">
+        <h3>
+            <a th:href="@{/petitions/view/{id}(id=${petition.id})}" 
+               th:text="${petition.title}">Title</a>
+        </h3>
+        <p th:text="${petition.description}">Description</p>
+        <p>📝 Signature count: <span th:text="${petition.signatureCount}">0</span></p>
+    </div>
+    
+    <p><a href="/petitions/search">← New Search</a></p>
+</body>
+</html>

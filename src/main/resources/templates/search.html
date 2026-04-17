@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Petitions</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+        input, button { padding: 10px; margin: 10px 0; }
+        input { width: 70%; }
+        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        .nav { margin-bottom: 20px; }
+        .nav a { margin-right: 15px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/petitions/create">Create Petition</a>
+        <a href="/petitions/all">View All Petitions</a>
+        <a href="/petitions/search">Search</a>
+    </div>
+    
+    <h1>Search Petitions</h1>
+    
+    <form action="/petitions/search/results" method="get">
+        <input type="text" name="keyword" placeholder="Enter title or description keyword..." required/>
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>
