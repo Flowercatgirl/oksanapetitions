@@ -1,11 +1,14 @@
 package com.example.oksanapetitions.controller;
 
 import com.example.oksanapetitions.model.Petition;
+import com.example.oksanapetitions.model.Signature;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +66,33 @@ public class PetitionController {
         model.addAttribute("results", results);
         model.addAttribute("keyword", keyword);
         return "search-results";
+    }
+    @GetMapping("/petitions/view/{id}")
+    public String viewPetition(@PathVariable Long id, Model model) {
+        Petition petition = findPetitionById(id);
+        if (petition == null) {
+            return "redirect:/petitions/all";
+        }
+        model.addAttribute("petition", petition);
+        model.addAttribute("signature", new Signature());
+        return "view-petition";
+    }
+    
+    @PostMapping("/petitions/sign/{id}")
+    public String signPetition(@PathVariable Long id, @ModelAttribute Signature signature) {
+        Petition petition = findPetitionById(id);
+        if (petition != null) {
+            petition.getSignatures().add(signature);
+        }
+        return "redirect:/petitions/view/" + id;
+    }
+    
+    private Petition findPetitionById(Long id) {
+        for (Petition p : petitions) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
     }
 }

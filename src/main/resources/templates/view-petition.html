@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Petition</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .petition-details { background: #f9f9f9; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+        .signature { border-bottom: 1px solid #ddd; padding: 10px 0; }
+        .signature-form { background: #e8f5e9; padding: 20px; border-radius: 10px; margin-top: 20px; }
+        input { width: 100%; padding: 8px; margin: 10px 0; }
+        button { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        .nav { margin-bottom: 20px; }
+        .nav a { margin-right: 15px; }
+        .signature-count { font-size: 1.2em; color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/petitions/create">Create Petition</a>
+        <a href="/petitions/all">View All Petitions</a>
+        <a href="/petitions/search">Search</a>
+    </div>
+    
+    <div class="petition-details">
+        <h1 th:text="${petition.title}">Petition Title</h1>
+        <p th:text="${petition.description}">Petition Description</p>
+        <p class="signature-count">✍️ Total Signatures: <span th:text="${petition.signatureCount}">0</span></p>
+    </div>
+    
+    <h2>Signatures (<span th:text="${petition.signatureCount}">0</span>)</h2>
+    
+    <div th:if="${petition.signatures.empty}">
+        <p>No signatures yet. Be the first to sign!</p>
+    </div>
+    
+    <div th:each="sig : ${petition.signatures}" class="signature">
+        <strong th:text="${sig.name}">Name</strong> - 
+        <span th:text="${sig.email}">email@example.com</span>
+    </div>
+    
+    <div class="signature-form">
+        <h3>Sign this petition</h3>
+        <form th:action="@{/petitions/sign/{id}(id=${petition.id})}" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" required/>
+            
+            <label>Email:</label>
+            <input type="email" name="email" required/>
+            
+            <button type="submit">Sign Now</button>
+        </form>
+    </div>
+</body>
+</html>
