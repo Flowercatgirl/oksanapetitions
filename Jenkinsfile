@@ -18,11 +18,12 @@ pipeline {
         }
         
         stage('Manual Approval') {
+            input {
+                message 'Deploy to Tomcat?'
+                ok 'Deploy'
+            }
             steps {
-                input {
-                    message "Deploy to Tomcat?"
-                    ok "Deploy"
-                }
+                echo 'Approval received. Proceeding to deploy...'
             }
         }
         
