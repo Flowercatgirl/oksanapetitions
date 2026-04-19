@@ -6,30 +6,7 @@ A Spring Boot petitions web application with a complete Jenkins CI/CD pipeline, 
 
 ## Architecture
 
-```
-                    GitHub
-                       │
-              push + webhook
-                       │
-         ┌─────────────▼──────────────────────────────┐
-         │         AWS EC2 — t3.micro — Ubuntu 22.04   │
-         │                                             │
-         │  ┌──────────────────┐   deploy WAR          │
-         │  │   Jenkins CI/CD  │──────────────────┐    │
-         │  │                  │                  │    │
-         │  │  ① Checkout      │    ┌─────────────▼──┐ │
-         │  │  ② Build         │    │ Apache Tomcat  │ │
-         │  │  ③ Test          │    │ Port 9090      │ │
-         │  │  ④ Package WAR   │    │ ROOT context   │ │
-         │  │  ⑤ Approval      │    └────────────────┘ │
-         │  │  ⑥ Deploy        │                       │
-         │  └──────────────────┘                       │
-         └─────────────────────────────────────────────┘
-                       │
-                   port 9090
-                       │
-               Public access
-```
+![Architecture](docs/architecture.svg)
 
 ---
 
