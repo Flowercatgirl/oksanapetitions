@@ -47,13 +47,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Stopping Tomcat to free memory...'
-                sh 'sudo systemctl stop tomcat10 || sudo systemctl stop tomcat || true'
+                sh 'sudo systemctl stop tomcat10 || true'
                 sleep(time: 5, unit: 'SECONDS')
-                echo 'Deploying WAR to Tomcat webapps...'
                 sh 'sudo cp /var/lib/jenkins/oksanapetitions/target/*.war /opt/tomcat10/webapps/ROOT.war'
-                echo 'Starting Tomcat...'
-                sh 'sudo systemctl start tomcat10 || sudo systemctl start tomcat || true'
+                sh 'sudo systemctl start tomcat10 || true'
                 echo 'Deployment complete!'
             }
         }
@@ -61,8 +58,7 @@ pipeline {
 
     post {
         failure {
-            echo 'Pipeline failed. Ensuring Tomcat is running...'
-            sh 'sudo systemctl start tomcat10 || sudo systemctl start tomcat || true'
+            sh 'sudo systemctl start tomcat10 || true'
         }
     }
 }
