@@ -47,10 +47,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'sudo systemctl stop tomcat10 || true'
+                sh 'sudo systemctl stop tomcat || true'
                 sleep(time: 5, unit: 'SECONDS')
                 sh 'sudo cp /var/lib/jenkins/oksanapetitions/target/*.war /opt/tomcat10/webapps/ROOT.war'
-                sh 'sudo systemctl start tomcat10 || true'
+                sh 'sudo systemctl start tomcat || true'
                 echo 'Deployment complete!'
             }
         }
@@ -58,7 +58,7 @@ pipeline {
 
     post {
         failure {
-            sh 'sudo systemctl start tomcat10 || true'
+            sh 'sudo systemctl start tomcat || true'
         }
     }
 }
