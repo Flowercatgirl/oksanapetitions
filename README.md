@@ -6,7 +6,7 @@ A Spring Boot petitions web application with a complete Jenkins CI/CD pipeline, 
 
 ## Architecture
 
-![Architecture](docs/architecture.svg)
+![Architecture](docs/cicd_architecture.svg)
 
 ---
 
