@@ -58,7 +58,7 @@ pipeline {
 
     post {
     always {
-        sh 'sudo chown -R ubuntu:ubuntu /var/lib/jenkins/oksanapetitions || true'
+        sh 'sudo chown -R jenkins:jenkins /var/lib/jenkins/oksanapetitions || true'
     }
     failure {
         sh 'sudo systemctl start tomcat || true'
