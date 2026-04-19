@@ -57,8 +57,11 @@ pipeline {
     }
 
     post {
-        failure {
-            sh 'sudo systemctl start tomcat || true'
-        }
+    always {
+        sh 'sudo chown -R ubuntu:ubuntu /var/lib/jenkins/oksanapetitions || true'
     }
+    failure {
+        sh 'sudo systemctl start tomcat || true'
+    }
+}
 }
